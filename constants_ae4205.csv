@@ -1,25 +1,58 @@
-Name,Value
-S,93.50
-sin,4.939
-lambda_ref,0.235
-gamma,1.4
-Rgas,287.058
-T0,288.15
-Lapse,0.0065
-p0,101325
-g0,9.80665
-Vcr_ref,233.56
-hcr_ref,10668
-CD_AminusW,0.0
-CT_baseline,1.8639e-4
-ftank,0.93
-rho_f,817.15
-W_f_ref,10731
-WA_minus_W,0.0
-W_TO_max_ref,45810
-WS_ref,NaN
-E_al,70000
-sigma_y,295
-rho_al,2800
-n_max,2.5
-rib_pitch,0.5
+Name,Value,Units,Description
+S,93.50,m^2,Wing area
+s,14.04,m,Wing semi-span (total/2)
+AR,8.43,-,Aspect ratio
+MAC,3.80,m,Mean aerodynamic chord
+lambda_ref,0.235,-,Planform taper ratio
+Lambda_c4,17.45,deg,Quarter-chord sweep
+N1,0.5,-,CST parameter N1
+N2,1.0,-,CST parameter N2
+perc_LE_init,17.5,percent,Initial leading-edge spar position
+perc_TE_init,57.5,percent,Initial trailing-edge spar position
+
+s_in,4.939,m,Inboard semi-span
+c_t_in,3.917,m,Inboard tip chord
+Lambda_LE_in_init,26.3,deg,Inboard leading-edge sweep (initial)
+Lambda_TE_in,4.2,deg,Inboard trailing-edge sweep
+Gamma_in,2.78,deg,Inboard dihedral
+iw,0,deg,Wing incidence angle
+
+s_out_init,9.101,m,Outboard span (initial)
+Lambda_LE_out,20.4,deg,Outboard leading-edge sweep
+Lambda_TE_out,4.2,deg,Outboard trailing-edge sweep
+c_t_out,1.205,m,Outboard tip chord
+Gamma_out,2.78,deg,Outboard dihedral
+epsilon_t,2,deg,Twist angle at tip
+
+s_tank_ref,11.934,m,Full tank span from CAD
+dtank,0,m,Tank offset (initial, variable in MDO)
+
+R_ref,2450196,m,Reference range
+Vcr_ref,233.56,m/s,Reference cruise velocity
+Mcr_init,0.7877,-,Initial Mach number
+hcr_init,10668,m,Initial cruise altitude
+
+W_TO_max_ref,45810,kg,Reference MTOW
+W_f_ref,10731,kg,Reference fuel weight
+W_A_minus_W,0,kg,Weight of aircraft minus wing
+W_des,40087,kg,Design lift/weight
+WS_ref,NaN,kg/m^2,Reference wing loading
+
+gamma,1.4,-,Specific heat ratio
+Rgas,287.058,J/(kg*K),Gas constant
+T0,288.15,K,Sea-level temperature
+Lapse,0.0065,K/m,Temperature lapse rate
+p0,101325,Pa,Sea-level pressure
+g0,9.80665,m/s^2,Gravity
+
+CT_baseline,1.8639e-4,N/(N*s),Baseline SFC
+ftank,0.93,-,Tank volume factor
+rho_f,817.15,kg/m^3,Fuel density
+
+E_al,70000,N/mm^2,Aluminum Young's modulus
+sigma_y_tens,295,N/mm^2,Yield tensile stress
+sigma_y_comp,295,N/mm^2,Yield compression stress
+rho_al,2800,kg/m^3,Material density
+
+n_max,2.5,-,Limit load factor
+rib_pitch,0.5,m,Rib pitch
