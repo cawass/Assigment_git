@@ -5,6 +5,15 @@ clc
 
 % Wing planform geometry 
 %                x    y     z   chord(m)    twist angle (deg) 
+Mcr = x0(1);
+hcr = x0(2);
+LambdaLEin_c = x0(3);          % inboard LE sweep [deg] (design variable)
+cr_in_c      = x0(4);          % root chord [m]
+s_out_c      = x0(5);          % outboard span [m]
+perc_LE_c    = x0(6) / 100;    % [% → fraction]
+perc_TE_c    = x0(7) / 100; 
+
+
 AC.Wing.Geom = [0     0     0     3.5         0;
                 0.9  14.5   0     1.4         0];
 
@@ -20,7 +29,7 @@ AC.Wing.Airfoils   = [0.2171    0.3450    0.2975    0.2685    0.2893  -0.1299   
 AC.Wing.eta = [0;1];  % Spanwise location of the airfoil sections
 
 % Viscous vs inviscid
-AC.Visc  = 1;              % 0 for inviscid and 1 for viscous analysis
+AC.Visc  = 0;              % 0 for inviscid and 1 for viscous analysis
 AC.Aero.MaxIterIndex = 150;    %Maximum number of Iteration for the
                                 %convergence of viscous calculation
                                 
