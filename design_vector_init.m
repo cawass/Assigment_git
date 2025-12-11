@@ -1,47 +1,41 @@
 function [x0, lb, ub] = design_vector_init()
 % design_vector_init
-% Initial design vector and bounds (Table 1.2 of your report).
+% Loads initial values and bounds from CSV files.
 
-% Initial values
-Mcr0        = 0.7877;
-hcr0        = 10668;      % [m]
-LambdaLEin0 = 26.3;       % [deg]
-cr_in0      = 5.996;      % [m]
-s_out0      = 9.101;      % [m]
-perc_LE0    = 17.5;       % [% of chord]
-perc_TE0    = 57.5;       % [% of chord]
+    %% --------------------- Required Variable Order ---------------------
+    orderedNames = { ...
+        'Mcr','hcr','LambdaLEin','cr_in','s_out','perc_LE','perc_TE', ...
+        'Au1','Au2','Au3','Au4','Au5', ...
+        'Al1','Al2','Al3','Al4','Al5' ...
+    };
 
-% CST coefficients (RAE 2822 fit)
-Au0 = [ 0.10  0.20  0.10  0.30  0.20 ];
-Al0 = [-0.10 -0.20 -0.13 -0.20 -0.10];  % sign chosen consistent with other lower values
+    %% -------------------------- Load CSVs ------------------------------
+    T0 = readtable('design_initial.csv');     % Initial values
+    Tb = readtable('design_bounds.csv');      % Lower and upper bounds
 
-% Assemble initial vector
-x0 = [Mcr0, hcr0, LambdaLEin0, cr_in0, s_out0, perc_LE0, perc_TE0, Au0, Al0].';
+    %% ---------------------- Allocate vectors ---------------------------
+    n = length(orderedNames);
+    x0 = zeros(n,1);
+    lb = zeros(n,1);
+    ub = zeros(n,1);
 
-% Lower bounds
-lb = [ ...
-    0.709,   ...  % Mcr
-    9619,   ...   % hcr [m]
-    0.01,   ...   % LambdaLEin [deg]
-    5.11,   ...   % cr_in [m]
-    7.48,   ...   % s_out [m]
-    15.0,   ...   % %LE
-    55.0,   ...   % %TE
-    0.05, 0.10, 0.05, 0.15, 0.10, ...         % Au1..Au5
-   -0.15,-0.30,-0.185,-0.30,-0.15  ...        % Al1..Al5
-    ].';
+    %% ---------------------- Build vectors ------------------------------
+    for i = 1:n
+        var = orderedNames{i};
 
-% Upper bounds
-ub = [ ...
-    0.866,   ...  % Mcr
-    11735,  ...   % hcr [m]
-    37.5,   ...   % LambdaLEin [deg]
-    6.10,   ...   % cr_in [m]
-    9.88,   ...   % s_out [m]
-    20.0,   ...   % %LE
-    60.0,   ...   % %TE
-    0.15, 0.30, 0.15, 0.45, 0.30, ...         % Au1..Au5
-   -0.05,-0.10,-0.075,-0.10,-0.05 ...         % Al1..Al5
-    ].';
+        % Initial value
+        row0 = strcmp(T0.Name, var);
+        if ~any(row0)
+            error('Initial value for variable "%s" not found in design_initial.csv.', var);
+        end
+        x0(i) = T0.Value(row0);
 
+        % Bounds
+        rowb = strcmp(Tb.Name, var);
+        if ~any(rowb)
+            error('Bounds for variable "%s" not found in design_bounds.csv.', var);
+        end
+        lb(i) = Tb.LB(rowb);
+        ub(i) = Tb.UB(rowb);
+    end
 end
